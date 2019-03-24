@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public static class CrossPlatformInputManager
     private static VirtualInput activeInput;
     private static VirtualInput mobileInput;
     private static VirtualInput standaloneInput;
-    
+
 
 
     static CrossPlatformInputManager()
@@ -26,22 +25,17 @@ public static class CrossPlatformInputManager
 #else
         activeInput=standaloneInput;
 #endif
-
     }
 
     public static void SwitchActiveInputMethod(ActiveInputMethod activeInputMethod)
     {
         switch (activeInputMethod)
         {
-            case ActiveInputMethod.Standalone:
-                activeInput = standaloneInput;                
-                break;
 
-            case ActiveInputMethod.Mobile:
-                activeInput = mobileInput;                
-                break;
         }
     }
+
+
 
     public static bool AxisExists(string name)
     {
@@ -51,115 +45,83 @@ public static class CrossPlatformInputManager
     public static bool ButtonExists(string name)
     {
         return activeInput.ButtonExists(name);
-    }   
+    }
 
     public static void RegisterVirtualAxis(VirtualAxis axis)
     {
-        activeInput.RegisterVirtualAxis(axis);
+        if (activeInput.AxisExists(axis.Name))
+        {
+            Debug.LogError("There is already a virtual axis named " + axis.Name + " registered.");
+        }
+        else
+        {
+            activeInput.RegisterVirtualAxis(axis);
+        }
     }
 
     public static void RegisterVirtualButton(VirtualButton button)
     {
-        activeInput.RegisterVirtualButton(button);
+        if (activeInput.ButtonExists(button.Name))
+        {
+            Debug.LogError("There is already a virtual button named " + button.Name + " registered.");
+        }
+        else
+        {
+            activeInput.RegisterVirtualButton(button);
+        }
     }
-    
+
     public static void UnRegisterVirtualAxis(string name)
     {
-        if (name == null)
+        if (activeInput.AxisExists(name))
         {
-            throw new ArgumentNullException("name");
+            activeInput.UnRegisterVirtualAxis(name);
         }
-        activeInput.UnRegisterVirtualAxis(name);
     }
 
     public static void UnRegisterVirtualButton(string name)
     {
-        if (name == null)
+        if (activeInput.ButtonExists(name))
         {
-            throw new ArgumentNullException("name");
+            activeInput.UnRegisterVirtualButton(name);
         }
-        activeInput.UnRegisterVirtualButton(name);
     }
 
 
-    // -- Button handling --
-    public static void SetButtonDown(string name)
-    {
-        activeInput.SetButtonDown(name);
-    }
+    public abstract void SetAxis(string name, float value);
 
-    public static void SetButtonUp(string name)
-    {
-        activeInput.SetButtonUp(name);
-    }
+    public abstract void SetAxisPositive(string name);
 
-    public static bool GetButton(string name)
-    {
-        return activeInput.GetButton(name);
-    }
+    public abstract void SetAxisNegative(string name);
 
-    public static bool GetButtonDown(string name)
-    {
-        return activeInput.GetButtonDown(name);
-    }
+    public abstract void SetAxisZero(string name);
 
-    public static bool GetButtonUp(string name)
-    {
-        return activeInput.GetButtonUp(name);
-    }
+    public abstract float GetAxis(string name, bool raw);
 
 
-    // -- Axis handling --
-    public static void SetAxis(string name, float value)
-    {
-        activeInput.SetAxis(name, value);
-    }
+    public abstract void SetButtonDown(string name);
 
-    public static void SetAxisPositive(string name)
-    {
-        activeInput.SetAxisPositive(name);
-    }
+    public abstract void SetButtonUp(string name);
 
-    public static void SetAxisNegative(string name)
-    {
-        activeInput.SetAxisNegative(name);
-    }
+    public abstract bool GetButtonDown(string name);
 
-    public static void SetAxisZero(string name)
-    {
-        activeInput.SetAxisZero(name);
-    }
+    public abstract bool GetButtonUp(string name);
 
-    // returns the platform appropriate axis for the given name
-    public static float GetAxis(string name)
-    {
-        return GetAxis(name, false);
-    }
+    public abstract bool GetButton(string name);
 
-    public static float GetAxisRaw(string name)
-    {
-        return GetAxis(name, true);
-    }
-
-    // private function handles both types of axis (raw and not raw)
-    private static float GetAxis(string name, bool raw)
-    {
-        return activeInput.GetAxis(name, raw);
-    }
 
 
 
     public class VirtualAxis
     {
-        public string name { get; private set; }
+        public string Name { get; private set; }
 
-        private float value;        
-
+        private float value;
 
 
         public VirtualAxis(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
 
         public void Update(float value)
@@ -167,31 +129,24 @@ public static class CrossPlatformInputManager
             this.value = value;
         }
 
-        public float GetValue
+        public float GetValue()
         {
-            get { return value; }
-        }
-
-        public float GetValueRaw
-        {
-            get { return value; }
+            return value;
         }
     }
 
-
-
     public class VirtualButton
     {
-        public string name { get; private set; }
+        public string Name { get; private set; }
 
         private bool pressed;
-        private int lastPressedFrame = -5;
-        private int releasedFrame = -5;
+        private float lastPressedFrame=-5f;
+        private float releasedFrame=-5f;
 
 
         public VirtualButton(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
 
         public void Press()
@@ -217,16 +172,13 @@ public static class CrossPlatformInputManager
 
         public bool GetButtonDown()
         {
-            return lastPressedFrame - Time.frameCount == -1;
+            return lastPressedFrame-Time.frameCount==-1f;
         }
 
         public bool GetButtonUp()
         {
-            return (releasedFrame == Time.frameCount - 1);
+            return (releasedFrame==Time.frameCount-1f);
         }
-    } 
+    }
+	
 }
-
-
-
-
