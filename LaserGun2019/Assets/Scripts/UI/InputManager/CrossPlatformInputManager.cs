@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,11 +32,14 @@ public static class CrossPlatformInputManager
     {
         switch (activeInputMethod)
         {
-
+            case ActiveInputMethod.Standalone:
+                activeInput = standaloneInput;
+                break;
+            case ActiveInputMethod.Mobile:
+                activeInput = mobileInput;
+                break;
         }
     }
-
-
 
     public static bool AxisExists(string name)
     {
@@ -49,69 +53,96 @@ public static class CrossPlatformInputManager
 
     public static void RegisterVirtualAxis(VirtualAxis axis)
     {
-        if (activeInput.AxisExists(axis.Name))
-        {
-            Debug.LogError("There is already a virtual axis named " + axis.Name + " registered.");
-        }
-        else
-        {
-            activeInput.RegisterVirtualAxis(axis);
-        }
+        activeInput.RegisterVirtualAxis(axis);
     }
 
     public static void RegisterVirtualButton(VirtualButton button)
     {
-        if (activeInput.ButtonExists(button.Name))
-        {
-            Debug.LogError("There is already a virtual button named " + button.Name + " registered.");
-        }
-        else
-        {
-            activeInput.RegisterVirtualButton(button);
-        }
+        activeInput.RegisterVirtualButton(button);
     }
 
     public static void UnRegisterVirtualAxis(string name)
     {
-        if (activeInput.AxisExists(name))
+        if (name==null)
         {
-            activeInput.UnRegisterVirtualAxis(name);
+            throw new ArgumentNullException("name");
         }
+        activeInput.UnRegisterVirtualAxis(name);
     }
 
     public static void UnRegisterVirtualButton(string name)
     {
-        if (activeInput.ButtonExists(name))
+        if (name==null)
         {
-            activeInput.UnRegisterVirtualButton(name);
+            throw new ArgumentNullException("name");
         }
+        activeInput.UnRegisterVirtualButton(name);
     }
 
 
-    public abstract void SetAxis(string name, float value);
+    public static void SetAxis(string name, float value)
+    {
+        activeInput.SetAxis(name, value);
+    }
 
-    public abstract void SetAxisPositive(string name);
+    public static void SetAxisPositive(string name)
+    {
+        activeInput.SetAxisPositive(name);
+    }
 
-    public abstract void SetAxisNegative(string name);
+    public static void SetAxisNegative(string name)
+    {
+        activeInput.SetAxisNegative(name);
+    }
 
-    public abstract void SetAxisZero(string name);
+    public static void SetAxisZero(string name)
+    {
+        activeInput.SetAxisZero(name);
+    }
 
-    public abstract float GetAxis(string name, bool raw);
+    public static float GetAxis(string name)
+    {
+        return GetAxis(name, false);
+    }
+
+    public static float GetAxisRaw(string name)
+    {
+        return GetAxis(name, true);
+    }
+
+    private static float GetAxis(string name,bool raw)
+    {
+        return activeInput.GetAxis(name, raw);
+    }
+
+    
+    public static void SetButtonDown(string name)
+    {
+        activeInput.SetButtonDown(name);
+    }
+
+    public static void SetButtonUp(string name)
+    {
+        activeInput.SetButtonUp(name);
+    }
+
+    public static bool GetButtonDown(string name)
+    {
+        return activeInput.GetButtonDown(name);
+    }
+
+    public static bool GetButtonUp(string name)
+    {
+        return activeInput.GetButtonUp(name);
+    }
+
+    public static bool GetButton(string name)
+    {
+        return activeInput.GetButton(name);
+    }
 
 
-    public abstract void SetButtonDown(string name);
-
-    public abstract void SetButtonUp(string name);
-
-    public abstract bool GetButtonDown(string name);
-
-    public abstract bool GetButtonUp(string name);
-
-    public abstract bool GetButton(string name);
-
-
-
-
+    
     public class VirtualAxis
     {
         public string Name { get; private set; }
