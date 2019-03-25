@@ -13,24 +13,20 @@ public class CharacterMovementController : MonoBehaviour
     [SerializeField] private CharacterRotationController rotationController;
 
     private CharacterController characterController;    
-    private new Camera camera;
-    private bool isRunning;
+    private new Camera camera;    
     private CollisionFlags collisionFlags;
     private bool mustJump;
+    private bool isRunning;
     private bool isJumping;
     private bool previouslyGrounded;
     private Vector3 previousMovementDelta=Vector3.zero;
+    private Vector3 movementDelta=Vector3.zero;
     
 
 
     private void Start()
     {
-        InitializeComponents();
-    }
-
-    private void InitializeComponents()
-    {
-        characterController = GetComponent<CharacterController>();        
+        characterController = GetComponent<CharacterController>();
         camera = GetComponentInChildren<Camera>();
         rotationController.InitializeRotationController(transform, camera.transform);
     }
@@ -38,36 +34,51 @@ public class CharacterMovementController : MonoBehaviour
     private void Update()
     {
         rotationController.RotateCharacterAndCamera();
-    }    
 
-    private void FixedUpdate()
-    {     
-        MoveCharacter();
+        CatchJumpInput();
+        CheckJumpState();        
+    }   
+    
+    private void CatchJumpInput()
+    {
+        if (!mustJump)
+        {
+            mustJump = CrossPlatformInputManager.GetButtonDown("Jump");
+        }
     }
 
-    private void MoveCharacter()
+    private void CheckJumpState()
+    {
+        if (!previouslyGrounded && characterController.isGrounded)
+        {
+            isJumping = false;
+        }
+        previouslyGrounded = characterController.isGrounded;
+    }
+
+    private void FixedUpdate()
     {
         Vector2 movementInputRaw = GetCrossPlatformMovementInput();
 
-        Vector2 normalizedInput=NormalizeInput(movementInputRaw);
+        Vector2 normalizedInput = NormalizeInput(movementInputRaw);
 
-        Vector3 movementDelta = GetMovementDeltaRelativeToCamForward(normalizedInput);
+        MakeMovementDeltaRelativeToCamForward(normalizedInput);
 
-        Vector3 movementDeltaProjectedOnGround = GetMovementDeltaProjectedOnGround(movementDelta);
+        ProjectMovementDeltaOnGround();
 
-        Vector3 movementDeltaWithSpeed = GetMovementDeltaWithSpeed(movementDeltaProjectedOnGround);
+        AddSpeedToMovementDelta();
 
-        Vector3 movementDeltaWithJump = GetMovementDeltaWithJumpForce(movementDeltaWithSpeed);
-                
-        collisionFlags = characterController.Move(movementDeltaWithJump * Time.fixedDeltaTime);        
+        AddJumpForceToMovementDelta();
+
+        collisionFlags = characterController.Move(movementDelta * Time.fixedDeltaTime);
     }
 
     private Vector2 GetCrossPlatformMovementInput()
     {
-        float rawInputHorizontal = CrossPlatformInputManager.GetAxis("Horizontal");
-        float rawInputVertical = CrossPlatformInputManager.GetAxis("Vertical");  
+        float inputHorizontalRaw = CrossPlatformInputManager.GetAxis("Horizontal");
+        float inputVerticalRaw = CrossPlatformInputManager.GetAxis("Vertical");  
 
-        return new Vector2(rawInputHorizontal, rawInputVertical);
+        return new Vector2(inputHorizontalRaw, inputVerticalRaw);
     }
 
     private Vector2 NormalizeInput(Vector2 input)
@@ -84,30 +95,25 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-    private Vector3 GetMovementDeltaRelativeToCamForward(Vector2 movementInput)
+    private void MakeMovementDeltaRelativeToCamForward(Vector2 movementInput)
     {
-        Vector3 movementDelta = transform.forward * movementInput.y + transform.right * movementInput.x;
-        return movementDelta;
+        movementDelta = transform.forward * movementInput.y + transform.right * movementInput.x;        
     }
 
-    private Vector3 GetMovementDeltaProjectedOnGround(Vector3 movementDelta)
+    private void ProjectMovementDeltaOnGround()
     {
         RaycastHit hitInfo;
         Physics.SphereCast(transform.position, characterController.radius, Vector3.down, out hitInfo,
             characterController.height / 2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
 
-        Vector3 movementDeltaOnGround = Vector3.ProjectOnPlane(movementDelta, hitInfo.normal).normalized;
-
-        return movementDeltaOnGround;
+        movementDelta = Vector3.ProjectOnPlane(movementDelta, hitInfo.normal).normalized;       
     }
 
-    private Vector3 GetMovementDeltaWithSpeed(Vector3 movementDelta)
+    private void AddSpeedToMovementDelta()
     {
         float speed = GetMovementSpeed();
 
-        Vector3 movementDeltaWithSpeed = new Vector3(movementDelta.x * speed, 0f, movementDelta.z * speed);
-
-        return movementDeltaWithSpeed;
+        movementDelta = new Vector3(movementDelta.x * speed, 0f, movementDelta.z * speed);
     }
 
     private float GetMovementSpeed()
@@ -118,29 +124,34 @@ public class CharacterMovementController : MonoBehaviour
         return isRunning ? runSpeed : walkSpeed;        
     }
 
-    private Vector3 GetMovementDeltaWithJumpForce(Vector3 movementDelta)
-    {
-        Vector3 movementDeltaWithJump = movementDelta;
+    private void AddJumpForceToMovementDelta()
+    {    
         if (characterController.isGrounded)
-        {
-            previousMovementDelta = movementDeltaWithJump;
-            movementDeltaWithJump.y = -stickToGroundForce;
+        {          
+            movementDelta.y = -stickToGroundForce;
 
             if (mustJump)
-            {
-                movementDeltaWithJump.y = jumpForce;
+            {                
+                movementDelta.y = jumpForce;
                 mustJump = false;
                 isJumping = true;
             }
         }
         else
         {
-            
-            movementDeltaWithJump = previousMovementDelta+Physics.gravity * gravityMultiplier * Time.fixedDeltaTime;
-            previousMovementDelta = movementDeltaWithJump;
+            movementDelta = previousMovementDelta+Physics.gravity * gravityMultiplier * Time.fixedDeltaTime;  
         }
-
-        return movementDeltaWithJump;
+        previousMovementDelta = movementDelta;  
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody rBody = hit.collider.attachedRigidbody;
+
+        if (collisionFlags == CollisionFlags.Below || rBody==null || rBody.isKinematic)
+        {
+            return;
+        }
+        rBody.AddForceAtPosition(characterController.velocity * 0.1f, hit.point, ForceMode.Impulse);        
+    }
 }

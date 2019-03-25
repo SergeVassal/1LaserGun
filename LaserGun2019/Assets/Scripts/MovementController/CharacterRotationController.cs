@@ -11,6 +11,9 @@ public class CharacterRotationController
     [SerializeField] private float mobileWholeRotationTouchAreaToDegrees = 180f;
     [SerializeField] private float standaloneSensitivityX;
     [SerializeField] private float standaloneSensitivityY;
+    [SerializeField] private bool clampVerticalRotation = true;
+    [SerializeField] private float MinimumX = -90f;
+    [SerializeField] private float MaximumX = 90f;    
 
     private Quaternion characterTargetRotation;
     private Quaternion cameraTargetRotation;
@@ -42,7 +45,7 @@ public class CharacterRotationController
 
 #if MOBILE_INPUT
         Vector2 mobileRotationDelta = GetRotDeltaRelativeToTouchAreaSizeAndSensitivity(rotationInputRaw);
-        CalculateCrossPlatformRotation(mobileRotationDelta);
+        CalculateRotationQuaternion(mobileRotationDelta);
         
 #endif
 
@@ -82,6 +85,9 @@ public class CharacterRotationController
     {
         characterTargetRotation *= Quaternion.Euler(0f, rotationDelta.x, 0f);
         cameraTargetRotation *= Quaternion.Euler(-rotationDelta.y, 0f, 0f);
+
+        if (clampVerticalRotation)
+            cameraTargetRotation = ClampRotationAroundXAxis(cameraTargetRotation);
     }
 
     private void ApplyRotation()
@@ -108,5 +114,19 @@ public class CharacterRotationController
             standaloneSmoothTime * Time.deltaTime);
         cameraTransform.localRotation = Quaternion.Slerp(cameraTransform.localRotation, cameraTargetRotation,
             standaloneSmoothTime * Time.deltaTime);
+    }
+
+    private Quaternion ClampRotationAroundXAxis(Quaternion q)
+    {
+        q.x /= q.w;
+        q.y /= q.w;
+        q.z /= q.w;
+        q.w = 1.0f;
+
+        float angleX = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
+        angleX = Mathf.Clamp(angleX, MinimumX, MaximumX);
+        q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angleX);
+
+        return q;
     }
 }
