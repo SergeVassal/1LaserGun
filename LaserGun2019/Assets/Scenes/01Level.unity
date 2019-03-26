@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -251,12 +251,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 167644427}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 170076735}
   - {fileID: 206517472}
-  - {fileID: 869341386}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -406,7 +405,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 206517468}
   m_LocalRotation: {x: -0.40821788, y: 0.23456968, z: -0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: -1.928363, z: 2.2981334}
+  m_LocalPosition: {x: 0, y: 0, z: 2.2981334}
   m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 167644428}
@@ -624,44 +623,67 @@ Transform:
   m_Father: {fileID: 892008229}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &666352547 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1513703193555580, guid: f9a8ddf35732783409c12eb405e71b63,
+    type: 2}
+  m_PrefabInternal: {fileID: 740921234}
+--- !u!114 &666352548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 666352547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3099684d2a5c174284b2ee612d613eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointCloudFactorySerializedObject:
+    columnAmount: 5
+    columnInterval: 1
+    rowAmount: 2
+    rowInterval: 1
+  objectToSpawn: {fileID: 1892913348303780, guid: 7c3ced0ce2f561a43bc3db83e01c10a1,
+    type: 2}
 --- !u!1001 &740921234
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 167644428}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.92718
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5.271669
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 7.6869745
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0.40821788
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0.23456968
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0.10938163
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.8754261
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 114558434275471552, guid: f9a8ddf35732783409c12eb405e71b63,
         type: 2}
@@ -701,11 +723,6 @@ Prefab:
     - {fileID: 114558434275471552, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &869341386 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63,
-    type: 2}
-  m_PrefabInternal: {fileID: 740921234}
 --- !u!4 &892008229 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400004, guid: 7fafe0af79ec5462289a87f9a4bbf052, type: 2}
@@ -718,6 +735,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 900746716}
+  - component: {fileID: 900746717}
   m_Layer: 5
   m_Name: MobileDualControlRig
   m_TagString: Untagged
@@ -747,6 +765,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &900746717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 900746715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19da4eb271730ce4290fa85c10ce5752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &919396014
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,6 +860,7 @@ GameObject:
   - component: {fileID: 927043143}
   - component: {fileID: 927043146}
   - component: {fileID: 927043145}
+  - component: {fileID: 927043144}
   m_Layer: 5
   m_Name: MovementTouchpad
   m_TagString: Untagged
@@ -856,6 +886,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &927043144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 927043142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e53760951fbc8ea40b8507f18634b362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axesToUse: 0
+  controlStyle: 0
+  horizontalAxisName: Horizontal
+  verticalAxisName: Vertical
 --- !u!114 &927043145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,6 +985,7 @@ GameObject:
   - component: {fileID: 1173825457}
   - component: {fileID: 1173825460}
   - component: {fileID: 1173825459}
+  - component: {fileID: 1173825458}
   m_Layer: 5
   m_Name: RotationTouchpad
   m_TagString: Untagged
@@ -965,6 +1011,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1173825458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1173825456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e53760951fbc8ea40b8507f18634b362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axesToUse: 0
+  controlStyle: 2
+  horizontalAxisName: Mouse X
+  verticalAxisName: Mouse Y
 --- !u!114 &1173825459
 MonoBehaviour:
   m_ObjectHideFlags: 0
