@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractGun :MonoBehaviour
+public abstract class GunAbstract : MonoBehaviour
 {
     public abstract void FireGun();
+	
 }

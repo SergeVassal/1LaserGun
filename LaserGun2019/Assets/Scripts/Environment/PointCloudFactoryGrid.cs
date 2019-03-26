@@ -24,86 +24,72 @@ public class PointCloudFactoryGrid : PointCloudFactoryAbstract
     private PointCloudDirection pointCloudDirection = PointCloudDirection.plusX;
     private Vector3 initialPos;
     private Vector3 previousPos;
-    private Vector3 newPosition;
+    private Vector3 newPointPosition;
+
 
 
     public override List<Vector3> GetPointCloud(Vector3 position)
     {
+        pointCloud = new List<Vector3>();
         initialPos = position;
+        previousPos = initialPos;
         CreatePointCloud();
         return pointCloud;
     }
 
     private void CreatePointCloud()
-    {
-        previousPos = initialPos;        
-        pointCloud = new List<Vector3>();
-
-        for(int rowIndex = 0; rowIndex < rowAmount; ++rowIndex)
-        {
-            for(int columnIndex = 0; columnIndex < columnAmount; ++columnIndex)
-            {
-                GetNextPosition(columnIndex,rowIndex);                
-                previousPos = newPosition;
-            }
-            AddNewRow(rowIndex);
-            
-            
-        }
-        for (int i = 0; i < pointCloud.Count; i++)
-        {
-            //Debug.Log(pointCloud[i]);
-        }
-    }
-
-    private void GetNextPosition(int currentColumnIndex,int currentRowIndex)
     {     
-        
-        AddNewColumn(currentColumnIndex, currentRowIndex);        
+        float nextPointYCoordinate = initialPos.y;
+        for (int rowIndex = 0; rowIndex < rowAmount; ++rowIndex)
+        {
+            for (int columnIndex = 0; columnIndex < columnAmount; ++columnIndex)
+            {
+                Vector3 nextPointXZCoordinates= GetNextPointXZCoordinates(columnIndex);                
+                newPointPosition = new Vector3(nextPointXZCoordinates.x, nextPointYCoordinate, nextPointXZCoordinates.z);
+
+                pointCloud.Add(newPointPosition);
+                previousPos = newPointPosition;
+            }
+            nextPointYCoordinate = GetNextPointYCoordinate(rowIndex);
+        }       
     }
 
-    
-    
-    private void AddNewColumn(int currentColumnIndex, int currentRowIndex)
+    private Vector3 GetNextPointXZCoordinates(int currentColumnIndex)
     {
-        if (currentColumnIndex == 0 && currentRowIndex == 0)
+        Vector3 nextPointXZCoordinates=previousPos;
+
+        if (currentColumnIndex == 0)
         {
-            newPosition = initialPos;
-            pointCloud.Add(newPosition);
-            return;
+            nextPointXZCoordinates.x = initialPos.x;
+            nextPointXZCoordinates.z = initialPos.z;            
         }
-        switch (pointCloudDirection)
+        else
         {
-            case PointCloudDirection.plusX:
-                newPosition.x=previousPos.x + columnInterval;
-                break;
+            switch (pointCloudDirection)
+            {
+                case PointCloudDirection.plusX:
+                    nextPointXZCoordinates.x = previousPos.x + columnInterval;
+                    break;
 
-            case PointCloudDirection.minusX:
-                newPosition.x = previousPos.x - columnInterval;
-                break;
+                case PointCloudDirection.minusX:
+                    nextPointXZCoordinates.x = previousPos.x - columnInterval;
+                    break;
 
-            case PointCloudDirection.plusZ:
-                newPosition.z = previousPos.z + columnInterval;
-                break;
+                case PointCloudDirection.plusZ:
+                    nextPointXZCoordinates.z = previousPos.z + columnInterval;
+                    break;
 
-            case PointCloudDirection.minusZ:
-                newPosition.z = previousPos.z - columnInterval;
-                break;
-        }
-        pointCloud.Add(newPosition);
-    }
+                case PointCloudDirection.minusZ:
+                    nextPointXZCoordinates.z = previousPos.z - columnInterval;
+                    break;
+            }
+        }        
+        return nextPointXZCoordinates;
+    } 
 
-    private void AddNewRow(int rowIndex)
+    private float GetNextPointYCoordinate(int currentRowIndex)
     {
-        if (rowIndex == 0)
-        {
-            return;
-        }
-        newPosition= new Vector3(initialPos.x, previousPos.y + rowInterval, initialPos.z);
-        pointCloud.Add(newPosition);
-        previousPos = newPosition;
-        Debug.Log(previousPos);
-        Debug.Log(newPosition);
+        float nextPointYCoordinate=previousPos.y+rowInterval;   
+        return nextPointYCoordinate;
     }
-
 }

@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Singleton <T>: MonoBehaviour where T:Singleton<T>
 {
-    private static T instance;
-
     public static T Instance
     {
         get { return instance; }
     }
 
-    public static bool isInstantiated
+    public static bool IsInitialized
     {
-        get { return instance != null; }
+        get{ return instance != null; }
     }
 
+    private static T instance;
 
 
-    protected virtual void Awake()
+
+    public virtual void Awake()
     {
         if (instance != null)
         {
@@ -30,12 +30,11 @@ public class Singleton <T>: MonoBehaviour where T:Singleton<T>
         }
     }
 
-
-    protected virtual void OnDestroy()
+    public virtual void OnDestroy()
     {
         if (instance == this)
         {
             instance = null;
-        }
+        }        
     }
 }

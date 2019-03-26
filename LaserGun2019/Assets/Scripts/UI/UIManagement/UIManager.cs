@@ -7,9 +7,11 @@ public class UIManager : Singleton<UIManager>
 {
     [SerializeField] private Text scoreText;
 
+
+
     public void UpdateScore(int newScore)
     {
-        scoreText.text = newScore.ToString();
+        scoreText.text = "Score: "+newScore.ToString();
     }
 
 }

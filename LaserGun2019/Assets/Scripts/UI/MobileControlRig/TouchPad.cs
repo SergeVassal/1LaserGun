@@ -34,7 +34,7 @@ public class TouchPad : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
     private bool dragging;
     private int fingerId=-1;
 
-    private RectTransform rectTransform;
+    private Image image;
     private Vector3 pivotPoint;    
 
     private Vector2 previousTouchPos;
@@ -48,8 +48,8 @@ public class TouchPad : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
 
     private void Start()
     {        
-        rectTransform = GetComponent<RectTransform>();
-        pivotPoint = rectTransform.pivot;
+        image = GetComponent<Image>();
+        pivotPoint = image.transform.position;
     }
 
     private void RegisterVirtualAxes()
@@ -87,20 +87,7 @@ public class TouchPad : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
 
         UpdateVirtualAxes(Vector3.zero);
 
-    }
-
-    private void UpdateVirtualAxes(Vector3 value)
-    {
-        if (useX)
-        {
-            horizontalVirtualAxis.Update(value.x);
-        }
-
-        if (useY)
-        {
-            verticalVirtualAxis.Update(value.y);
-        }
-    }
+    }   
 
     private void Update()
     {
@@ -121,6 +108,19 @@ public class TouchPad : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
             }
 
             UpdateVirtualAxes(new Vector3(pointerDelta.x, pointerDelta.y, 0));
+        }
+    }
+
+    private void UpdateVirtualAxes(Vector3 value)
+    {
+        if (useX)
+        {
+            horizontalVirtualAxis.Update(value.x);
+        }
+
+        if (useY)
+        {
+            verticalVirtualAxis.Update(value.y);
         }
     }
 
