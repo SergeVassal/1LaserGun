@@ -139,7 +139,7 @@ public class CharacterMovementController : MonoBehaviour
         }
         else
         {
-            movementDelta = previousMovementDelta+Physics.gravity * gravityMultiplier * Time.fixedDeltaTime;  
+            movementDelta = previousMovementDelta+Physics.gravity * gravityMultiplier * Time.fixedDeltaTime;            
         }
         previousMovementDelta = movementDelta;  
     }
