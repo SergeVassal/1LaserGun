@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -501,6 +501,21 @@ MonoBehaviour:
     clampVerticalRotation: 1
     MinimumX: -90
     MaximumX: 80
+    characterTargetRotation: {x: 0, y: 0, z: 0, w: 0}
+    cameraTargetRotation: {x: 0, y: 0, z: 0, w: 0}
+    characterBodyTransform: {fileID: 0}
+    cameraTransform: {fileID: 0}
+    mobileTouchAreaHorizontalSize: 0
+    mobileTouchAreaVerticalSize: 0
+  characterController: {fileID: 0}
+  camera: {fileID: 0}
+  collisionFlags: 0
+  mustJump: 0
+  isRunning: 0
+  isJumping: 0
+  previouslyGrounded: 0
+  previousMovementDelta: {x: 0, y: 0, z: 0}
+  movementDelta: {x: 0, y: 0, z: 0}
 --- !u!1 &395926679
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +668,7 @@ MonoBehaviour:
     type: 2}
   laserBeamPoolSize: 10
   laserBeamPoolParentTransform: {fileID: 1809508880}
+  laserBeamPool: []
 --- !u!1 &666352547 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1513703193555580, guid: f9a8ddf35732783409c12eb405e71b63,
@@ -674,8 +690,15 @@ MonoBehaviour:
     columnInterval: 1
     rowAmount: 5
     rowInterval: 1
+    pointCloud: []
+    pointCloudDirection: 0
+    initialPos: {x: 0, y: 0, z: 0}
+    previousPos: {x: 0, y: 0, z: 0}
+    newPointPosition: {x: 0, y: 0, z: 0}
   objectToSpawn: {fileID: 1892913348303780, guid: 7c3ced0ce2f561a43bc3db83e01c10a1,
     type: 2}
+  pointCloud: []
+  objectPool: []
 --- !u!4 &666352549 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63,
@@ -936,6 +959,13 @@ MonoBehaviour:
   controlStyle: 0
   horizontalAxisName: Horizontal
   verticalAxisName: Vertical
+  useX: 0
+  useY: 0
+  dragging: 0
+  fingerId: -1
+  image: {fileID: 0}
+  pivotPoint: {x: 0, y: 0, z: 0}
+  previousTouchPos: {x: 0, y: 0}
 --- !u!114 &927043145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -978,7 +1008,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1091962003}
   - component: {fileID: 1091962004}
-  - component: {fileID: 1091962005}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1007,19 +1036,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1091962002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d566f0749b3893347b083437450ec16e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lockCursor: 1
---- !u!114 &1091962005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1091962002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ccbd67177887fa49b05a0da94c60a53, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f40c91f0f6cfe5419eeac57f5169d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1173825456
@@ -1073,6 +1090,13 @@ MonoBehaviour:
   controlStyle: 2
   horizontalAxisName: Mouse X
   verticalAxisName: Mouse Y
+  useX: 0
+  useY: 0
+  dragging: 0
+  fingerId: -1
+  image: {fileID: 0}
+  pivotPoint: {x: 0, y: 0, z: 0}
+  previousTouchPos: {x: 0, y: 0}
 --- !u!114 &1173825459
 MonoBehaviour:
   m_ObjectHideFlags: 0
