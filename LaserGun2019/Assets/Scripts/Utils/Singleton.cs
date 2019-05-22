@@ -4,37 +4,29 @@ using UnityEngine;
 
 public class Singleton <T>: MonoBehaviour where T:Singleton<T>
 {
-    public static T Instance
+    public static T Instance { get; private set; }
+    public static bool IsInitialized { get{ return Instance != null; }  }
+
+
+
+    protected virtual void Awake()
     {
-        get { return instance; }
-    }
-
-    public static bool IsInitialized
-    {
-        get{ return instance != null; }
-    }
-
-    private static T instance;
-
-
-
-    public virtual void Awake()
-    {
-        if (instance != null)
+        if (Instance != null)
         {
-            Debug.LogError("[SingleTon] Trying to instantiate a second instance of a singleton class.");
+            throw new System.Exception("You are trying to instantiate a second instance of a singleton class!");
         }
         else
         {
-            instance = (T)this;
+            Instance = (T)this;    
         }
     }
 
-    public virtual void OnDestroy()
+    protected virtual void OnDestroy()
     {
-        if (instance == this)
+        if (Instance == this)
         {
-            instance = null;
-        }        
+            Instance = null;
+        }
     }
 }
+
