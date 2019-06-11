@@ -484,38 +484,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 264231112}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab499c716acad714088ddb0437dd9295, type: 3}
+  m_Script: {fileID: 11500000, guid: cffbdac94565d0a4880a3c32c49118a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 10
-  walkSpeed: 5
-  jumpForce: 10
-  stickToGroundForce: 10
-  gravityMultiplier: 2
   rotationController:
     standaloneSmooth: 0
-    standaloneSmoothTime: 0.5
-    mobileWholeRotationTouchAreaToDegrees: 180
-    standaloneSensitivityX: 2
-    standaloneSensitivityY: 2
-    clampVerticalRotation: 1
-    MinimumX: -90
-    MaximumX: 80
-    characterTargetRotation: {x: 0, y: 0, z: 0, w: 0}
-    cameraTargetRotation: {x: 0, y: 0, z: 0, w: 0}
-    characterBodyTransform: {fileID: 0}
-    cameraTransform: {fileID: 0}
-    mobileTouchAreaHorizontalSize: 0
-    mobileTouchAreaVerticalSize: 0
-  characterController: {fileID: 0}
-  camera: {fileID: 0}
-  collisionFlags: 0
-  mustJump: 0
-  isRunning: 0
-  isJumping: 0
-  previouslyGrounded: 0
-  previousMovementDelta: {x: 0, y: 0, z: 0}
-  movementDelta: {x: 0, y: 0, z: 0}
+  walkSpeed: 7
+  runSpeed: 15
+  stickToGroundForce: -0.1
+  jumpForce: 40
+  gravityMultiplier: 5
 --- !u!1 &395926679
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 697412c7cc2eb814da03404b21634224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 919396016}
 --- !u!1 &436880757
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,11 +641,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2f94fb67793fa4eab278d6721b2ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserBeamPrefab: {fileID: 1584028645413038, guid: 6216a81fbf640ca4dadb869a0ae2cf81,
-    type: 2}
-  laserBeamPoolSize: 10
-  laserBeamPoolParentTransform: {fileID: 1809508880}
-  laserBeamPool: []
 --- !u!1 &666352547 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1513703193555580, guid: f9a8ddf35732783409c12eb405e71b63,
@@ -685,20 +657,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3099684d2a5c174284b2ee612d613eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointCloudFactorySerializedObject:
-    columnAmount: 10
-    columnInterval: 1
-    rowAmount: 5
-    rowInterval: 1
-    pointCloud: []
-    pointCloudDirection: 0
-    initialPos: {x: 0, y: 0, z: 0}
-    previousPos: {x: 0, y: 0, z: 0}
-    newPointPosition: {x: 0, y: 0, z: 0}
-  objectToSpawn: {fileID: 1892913348303780, guid: 7c3ced0ce2f561a43bc3db83e01c10a1,
-    type: 2}
-  pointCloud: []
-  objectPool: []
 --- !u!4 &666352549 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63,
@@ -831,7 +789,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 900746715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19da4eb271730ce4290fa85c10ce5752, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ff3002c4e508364e873269b054a49c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &919396014
@@ -952,20 +910,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 927043142}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e53760951fbc8ea40b8507f18634b362, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c2e9f67f4b237c4f8dfe3d7edb11a9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axesToUse: 0
   controlStyle: 0
   horizontalAxisName: Horizontal
   verticalAxisName: Vertical
-  useX: 0
-  useY: 0
-  dragging: 0
-  fingerId: -1
-  image: {fileID: 0}
-  pivotPoint: {x: 0, y: 0, z: 0}
-  previousTouchPos: {x: 0, y: 0}
 --- !u!114 &927043145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,7 +1000,6 @@ GameObject:
   - component: {fileID: 1173825457}
   - component: {fileID: 1173825460}
   - component: {fileID: 1173825459}
-  - component: {fileID: 1173825458}
   m_Layer: 5
   m_Name: RotationTouchpad
   m_TagString: Untagged
@@ -1075,28 +1025,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1173825458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1173825456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e53760951fbc8ea40b8507f18634b362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  axesToUse: 0
-  controlStyle: 2
-  horizontalAxisName: Mouse X
-  verticalAxisName: Mouse Y
-  useX: 0
-  useY: 0
-  dragging: 0
-  fingerId: -1
-  image: {fileID: 0}
-  pivotPoint: {x: 0, y: 0, z: 0}
-  previousTouchPos: {x: 0, y: 0}
 --- !u!114 &1173825459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1249,9 +1177,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1490742509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78268205385e83f40aa3131ac93422a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 443b8cd2c6fa1d444bd992fa7d0ef92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonName: Jump
 --- !u!1 &1503284523
 GameObject:
   m_ObjectHideFlags: 0
