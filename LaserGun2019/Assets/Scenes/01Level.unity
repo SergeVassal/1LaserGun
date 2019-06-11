@@ -492,7 +492,7 @@ MonoBehaviour:
   walkSpeed: 7
   runSpeed: 15
   stickToGroundForce: -0.1
-  jumpForce: 40
+  jumpForce: 15
   gravityMultiplier: 5
 --- !u!1 &395926679
 GameObject:

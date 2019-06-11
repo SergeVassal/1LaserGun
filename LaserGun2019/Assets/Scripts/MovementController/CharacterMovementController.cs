@@ -22,7 +22,7 @@ public class CharacterMovementController : MonoBehaviour
     private bool hasJumpedDuringThisUpdate;
     private bool isJumping;
     private bool isRunning;
-    private bool previouslyGrounded;
+    private bool previouslyGrounded;    
     private bool isGrounded;
     private CollisionFlags collisionFlags;
     private const float CHARACTER_COLLISION_FORCE=0.1f;
@@ -37,7 +37,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void Update()
     {
-        rotationController.RotateCharacterAndCamera();
+        rotationController.RotateCharacterAndCamera();        
 
         GetJumpInput();
         CheckJumpState();
@@ -47,9 +47,10 @@ public class CharacterMovementController : MonoBehaviour
     private void GetJumpInput()
     {
         isJumpPressed = CrossPlatformInputManager.GetButtonDown("Jump");
-
-        if (isJumpPressed)
+        
+        if (isJumpPressed&&isGrounded)
         {
+            
             isJumpPressedDuringFixedUpdate = true;
             hasJumpedDuringThisUpdate = false;
         }
@@ -70,8 +71,7 @@ public class CharacterMovementController : MonoBehaviour
         Vector2 movementInputRaw = GetCrossPlatformMovementInput();
         Vector2 normalizedInput = NormalizeInput(movementInputRaw);
         MakeMovementDeltaRelativeToCamForward(normalizedInput);
-        ProjectMovementDeltaOnGround();
-        RestrictDoubleJump();
+        ProjectMovementDeltaOnGround();        
         AddSpeedToMovementDelta();
         AddJumpForceToMovementDelta();
         collisionFlags = characterController.Move(movementDelta * Time.fixedDeltaTime);
@@ -81,7 +81,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void CheckIfGrounded()
     {
-        isGrounded = characterController.isGrounded;
+        isGrounded = characterController.isGrounded;        
     }
 
     private Vector2 GetCrossPlatformMovementInput()
@@ -110,15 +110,7 @@ public class CharacterMovementController : MonoBehaviour
         Physics.SphereCast(transform.position, characterController.radius, Vector3.down,
             out hitInfo, characterController.height / 2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
         movementDelta = Vector3.ProjectOnPlane(movementDelta, hitInfo.normal).normalized;
-    }
-
-    private void RestrictDoubleJump()
-    {
-        if (!isGrounded && isJumpPressedDuringFixedUpdate)
-        {
-            isJumpPressedDuringFixedUpdate = false;
-        }
-    }
+    }    
 
     private void AddSpeedToMovementDelta()
     {
