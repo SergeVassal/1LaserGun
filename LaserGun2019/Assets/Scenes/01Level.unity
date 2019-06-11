@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -489,6 +489,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationController:
     standaloneSmooth: 0
+    standaloneSmoothTime: 0
+    mobileWholeRotationTouchAreaToDegreesHorizontal: 180
+    mobileWholeRotationTouchAreaToDegreesVertical: 180
+    clampVerticalRotation: 1
+    MinimumX: -90
+    MaximumX: 90
+    standaloneSensitivityX: 5
+    standaloneSensitivityY: 5
   walkSpeed: 7
   runSpeed: 15
   stickToGroundForce: -0.1
@@ -883,7 +891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &927043143
 RectTransform:
   m_ObjectHideFlags: 0
@@ -958,7 +966,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1091962003}
-  - component: {fileID: 1091962004}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -979,17 +986,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1091962004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1091962002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f40c91f0f6cfe5419eeac57f5169d20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1173825456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1000,13 +996,14 @@ GameObject:
   - component: {fileID: 1173825457}
   - component: {fileID: 1173825460}
   - component: {fileID: 1173825459}
+  - component: {fileID: 1173825458}
   m_Layer: 5
   m_Name: RotationTouchpad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1173825457
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1025,6 +1022,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1173825458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1173825456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2e9f67f4b237c4f8dfe3d7edb11a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axesToUse: 0
+  controlStyle: 2
+  horizontalAxisName: Mouse X
+  verticalAxisName: Mouse Y
 --- !u!114 &1173825459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1076,7 +1088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1490742510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1293,7 +1305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2039231902
 RectTransform:
   m_ObjectHideFlags: 0

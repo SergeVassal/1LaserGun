@@ -13,23 +13,24 @@ public class CharacterMovementController : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravityMultiplier;
 
-    private Vector3 movementDelta=Vector3.zero;
-    private Vector3 previousMovementDelta = Vector3.zero;
     private CharacterController characterController;
     private new Camera camera;
+    private Vector3 movementDelta=Vector3.zero;
+    private Vector3 previousMovementDelta = Vector3.zero;    
     private bool isJumpPressed;
     private bool isJumpPressedDuringFixedUpdate;    
-    private bool hasJumpedDuringThisUpdate;
-    private bool isJumping;
+    private bool hasJumpedDuringThisUpdate;    
     private bool isRunning;
-    private bool previouslyGrounded;    
+    private bool isCloseToGround;
     private bool isGrounded;
     private CollisionFlags collisionFlags;
     private const float CHARACTER_COLLISION_FORCE=0.1f;
+    private RaycastHit hitInfo;
+    
 
 
     private void Start()
-    {
+    {      
         characterController = GetComponent<CharacterController>();
         camera = GetComponentInChildren<Camera>();
         rotationController.Initialize(transform, camera.transform);
@@ -39,49 +40,32 @@ public class CharacterMovementController : MonoBehaviour
     {
         rotationController.RotateCharacterAndCamera();        
 
-        GetJumpInput();
-        CheckJumpState();
+        GetJumpInput();        
     }
-
 
     private void GetJumpInput()
     {
         isJumpPressed = CrossPlatformInputManager.GetButtonDown("Jump");
         
-        if (isJumpPressed&&isGrounded)
-        {
-            
+        if (isJumpPressed&&isCloseToGround)
+        {            
             isJumpPressedDuringFixedUpdate = true;
             hasJumpedDuringThisUpdate = false;
         }
     }
 
-    private void CheckJumpState()
-    {
-        if (!previouslyGrounded && isGrounded)
-        {
-            isJumping = false;
-        }        
-    }
 
     private void FixedUpdate()
-    {
-        CheckIfGrounded();
-        previouslyGrounded = isGrounded;
-        Vector2 movementInputRaw = GetCrossPlatformMovementInput();
+    {   
+        Vector2 movementInputRaw = GetCrossPlatformMovementInput();        
         Vector2 normalizedInput = NormalizeInput(movementInputRaw);
         MakeMovementDeltaRelativeToCamForward(normalizedInput);
+        CheckIfCloseToGround();
         ProjectMovementDeltaOnGround();        
         AddSpeedToMovementDelta();
+        CheckIfGrounded();
         AddJumpForceToMovementDelta();
-        collisionFlags = characterController.Move(movementDelta * Time.fixedDeltaTime);
-    }
-
-    
-
-    private void CheckIfGrounded()
-    {
-        isGrounded = characterController.isGrounded;        
+        collisionFlags = characterController.Move(movementDelta * Time.fixedDeltaTime);        
     }
 
     private Vector2 GetCrossPlatformMovementInput()
@@ -104,13 +88,23 @@ public class CharacterMovementController : MonoBehaviour
         movementDelta = transform.forward * movementInput.y + transform.right * movementInput.x;
     }
 
-    private void ProjectMovementDeltaOnGround()
+    public void CheckIfCloseToGround()
     {
-        RaycastHit hitInfo;
-        Physics.SphereCast(transform.position, characterController.radius, Vector3.down,
-            out hitInfo, characterController.height / 2f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
+        if (Physics.SphereCast(transform.position, characterController.radius, Vector3.down,
+            out hitInfo, characterController.height / 2f, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+        {
+            isCloseToGround = true;
+        }
+        else
+        {
+            isCloseToGround = false;
+        }        
+    }
+
+    private void ProjectMovementDeltaOnGround()
+    {                
         movementDelta = Vector3.ProjectOnPlane(movementDelta, hitInfo.normal).normalized;
-    }    
+    }
 
     private void AddSpeedToMovementDelta()
     {
@@ -127,11 +121,16 @@ public class CharacterMovementController : MonoBehaviour
         return isRunning ? runSpeed : walkSpeed;
     }
 
+    private void CheckIfGrounded()
+    {
+        isGrounded = characterController.isGrounded;
+    }
+
     private void AddJumpForceToMovementDelta()
     {
         if (isGrounded)
         {
-            movementDelta.y = -stickToGroundForce;            
+            movementDelta.y = -stickToGroundForce;
 
             if (isJumpPressedDuringFixedUpdate && !hasJumpedDuringThisUpdate)
             {
@@ -139,12 +138,11 @@ public class CharacterMovementController : MonoBehaviour
                 hasJumpedDuringThisUpdate = true;
                 isJumpPressedDuringFixedUpdate = false;
                 isJumpPressed = false;
-                isJumping = true;
             }
         }
         else
-        {            
-            movementDelta = previousMovementDelta + Physics.gravity * gravityMultiplier * Time.fixedDeltaTime;
+        {
+            movementDelta.y = previousMovementDelta.y + Physics.gravity.y * gravityMultiplier * Time.fixedDeltaTime;
         }
         previousMovementDelta = movementDelta;
     }
