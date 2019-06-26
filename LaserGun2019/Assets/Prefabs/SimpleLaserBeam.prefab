@@ -36,7 +36,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4425542879669632}
-  - component: {fileID: 114880649294601802}
+  - component: {fileID: 114838917870449696}
   m_Layer: 0
   m_Name: ExploEffect
   m_TagString: Untagged
@@ -87,7 +87,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4675994294676140}
   - component: {fileID: 120739109700853252}
-  - component: {fileID: 114080997979935144}
+  - component: {fileID: 114598095163998832}
   m_Layer: 0
   m_Name: SimpleLaserBeam
   m_TagString: Untagged
@@ -164,7 +164,7 @@ Transform:
   m_Father: {fileID: 4425542879669632}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114080997979935144
+--- !u!114 &114598095163998832
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -172,10 +172,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1584028645413038}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0211a37e21014e4280886a5fcf526a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e8189b896fbf50469de418db7406727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114880649294601802
+--- !u!114 &114838917870449696
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -183,11 +183,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1284689605635670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37cccc7f477d69049a6589ddf10cfe03, type: 3}
+  m_Script: {fileID: 11500000, guid: 80f064acbb47cc945b4fbe84a1fb51c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionRadius: 10
-  explosionForce: 10
+  explosionRadius: 5
+  explosionForce: 5
   explosionUpwardsModifier: 1
 --- !u!120 &120739109700853252
 LineRenderer:

@@ -16,6 +16,7 @@ public abstract class VirtualInput
     {
         return virtualAxes.ContainsKey(name);    
     }
+
     public void RegisterVirtualAxis(CrossPlatformInputManager.VirtualAxis axis)
     {
         if (virtualAxes.ContainsKey(axis.Name))
@@ -27,6 +28,7 @@ public abstract class VirtualInput
             virtualAxes.Add(axis.Name, axis);
         }
     }
+
     public void UnRegisterVirtualAxis(string name)
     {
         if (virtualAxes.ContainsKey(name))
@@ -40,6 +42,7 @@ public abstract class VirtualInput
     {
         return virtualButtons.ContainsKey(name);
     }
+
     public void RegisterVirtualButton(CrossPlatformInputManager.VirtualButton button)
     {
         if (virtualButtons.ContainsKey(button.Name))
@@ -51,6 +54,7 @@ public abstract class VirtualInput
             virtualButtons.Add(button.Name, button);
         }
     }
+
     public void UnRegisterVirtualButton(string name)
     {
         if (virtualButtons.ContainsKey(name))

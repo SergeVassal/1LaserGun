@@ -23,8 +23,7 @@ public class CharacterRotationController
     private Quaternion cameraTargetRotation;
 
     private float mobileTouchAreaHorizontalSize;
-    private float mobileTouchAreaVerticalSize;
-       
+    private float mobileTouchAreaVerticalSize;       
 
 
     public void Initialize(Transform characterBody, Transform camera)

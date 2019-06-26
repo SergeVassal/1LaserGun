@@ -14,7 +14,6 @@ public class TouchPad : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         OnlyHorizontal,
         OnlyVertical
     }
-
     [SerializeField] private AxisOption axesToUse = AxisOption.Both;
 
     [SerializeField] 

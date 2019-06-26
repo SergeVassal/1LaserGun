@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465785, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -405,13 +405,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 206517468}
-  m_LocalRotation: {x: -0.40821788, y: 0.23456968, z: -0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.41207898, y: 0.23505029, z: -0.10834499, w: 0.8736153}
   m_LocalPosition: {x: 0, y: 0, z: 2.2981334}
   m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 167644428}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -41.995003, y: 42.279003, z: -31.022001}
 --- !u!1 &264231112
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,9 +606,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 395926679}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 697412c7cc2eb814da03404b21634224, type: 3}
+  m_Script: {fileID: 11500000, guid: b9c15e6c7a1293f49b8a1b66169fc839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 919396016}
 --- !u!1 &436880757
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,25 +647,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 436880757}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f2f94fb67793fa4eab278d6721b2ae1, type: 3}
+  m_Script: {fileID: 11500000, guid: 02f4f0ce8b08e584b97bc1361cc30ce2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &666352547 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1513703193555580, guid: f9a8ddf35732783409c12eb405e71b63,
+  laserBeamPrefab: {fileID: 1584028645413038, guid: 6216a81fbf640ca4dadb869a0ae2cf81,
     type: 2}
-  m_PrefabInternal: {fileID: 740921234}
---- !u!114 &666352548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 666352547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3099684d2a5c174284b2ee612d613eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  laserBeamPoolSize: 10
+  laserBeamPoolParentTransform: {fileID: 1809508880}
 --- !u!4 &666352549 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63,
@@ -709,42 +698,33 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114558434275471552, guid: f9a8ddf35732783409c12eb405e71b63,
+    - target: {fileID: 114284338539288068, guid: f9a8ddf35732783409c12eb405e71b63,
         type: 2}
       propertyPath: objectToSpawn
       value: 
-      objectReference: {fileID: 1883752416946888, guid: d691a368034d2144ab049c1e1d60db74,
+      objectReference: {fileID: 1892913348303780, guid: 7c3ced0ce2f561a43bc3db83e01c10a1,
         type: 2}
-    - target: {fileID: 114558434275471552, guid: f9a8ddf35732783409c12eb405e71b63,
+    - target: {fileID: 114284338539288068, guid: f9a8ddf35732783409c12eb405e71b63,
         type: 2}
-      propertyPath: rowAmount
-      value: 5
+      propertyPath: pointCloud.columnAmount
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 114558434275471552, guid: f9a8ddf35732783409c12eb405e71b63,
+    - target: {fileID: 114284338539288068, guid: f9a8ddf35732783409c12eb405e71b63,
         type: 2}
-      propertyPath: rowInterval
+      propertyPath: pointCloud.columnInterval
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114558434275471552, guid: f9a8ddf35732783409c12eb405e71b63,
+    - target: {fileID: 114284338539288068, guid: f9a8ddf35732783409c12eb405e71b63,
         type: 2}
-      propertyPath: columnAmount
-      value: 2
+      propertyPath: pointCloud.rowAmount
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114558434275471552, guid: f9a8ddf35732783409c12eb405e71b63,
+    - target: {fileID: 114284338539288068, guid: f9a8ddf35732783409c12eb405e71b63,
         type: 2}
-      propertyPath: columnInterval
+      propertyPath: pointCloud.rowInterval
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4233109762299540, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114558434275471552, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f9a8ddf35732783409c12eb405e71b63, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &892008229 stripped
@@ -891,7 +871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &927043143
 RectTransform:
   m_ObjectHideFlags: 0
@@ -966,6 +946,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1091962003}
+  - component: {fileID: 1091962004}
+  - component: {fileID: 1091962005}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -986,6 +968,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1091962004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1091962002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 561874fe3eb3e37488e2b185b4bf7ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockCursor: 1
+--- !u!114 &1091962005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1091962002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab86ab6165800c94a9b14594c064e077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1173825456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +1008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1173825457
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1088,7 +1093,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1490742510
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1305,7 +1310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2039231902
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1332,9 +1337,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2039231901}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d564e913786345347807dc20868423b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 443b8cd2c6fa1d444bd992fa7d0ef92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonName: Fire1
 --- !u!114 &2039231904
 MonoBehaviour:
   m_ObjectHideFlags: 0

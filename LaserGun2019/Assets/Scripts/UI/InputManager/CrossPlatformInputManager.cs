@@ -16,7 +16,6 @@ public static class CrossPlatformInputManager
     private static VirtualInput activeInput;
 
 
-
     static CrossPlatformInputManager()
     {
         standaloneInput = new StandaloneInput();
@@ -156,6 +155,7 @@ public static class CrossPlatformInputManager
             return value;
         }
     }
+
 
     public class VirtualButton
     {

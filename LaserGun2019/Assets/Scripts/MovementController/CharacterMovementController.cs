@@ -54,7 +54,6 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-
     private void FixedUpdate()
     {   
         Vector2 movementInputRaw = GetCrossPlatformMovementInput();        
@@ -103,7 +102,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void ProjectMovementDeltaOnGround()
     {                
-        movementDelta = Vector3.ProjectOnPlane(movementDelta, hitInfo.normal).normalized;
+        movementDelta = Vector3.ProjectOnPlane(movementDelta, hitInfo.normal).normalized;   
     }
 
     private void AddSpeedToMovementDelta()
